@@ -102,60 +102,7 @@ func (b *Barnard) OnTextInput(ui *uiterm.Ui, textbox *uiterm.Textbox, text strin
 	}
 }
 
-func (b *Barnard) OnUiInitialize(ui *uiterm.Ui) {
-	ui.Add(uiViewLogo, &uiterm.Label{
-		Text: " barnard ",
-		Fg:   uiterm.ColorWhite | uiterm.AttrBold,
-		Bg:   uiterm.ColorMagenta,
-	})
-
-	ui.Add(uiViewTop, &uiterm.Label{
-		Fg: uiterm.ColorWhite,
-		Bg: uiterm.ColorBlue,
-	})
-
-	b.UiStatus = uiterm.Label{
-		Text: " Idle ",
-		Fg:   uiterm.ColorBlack,
-		Bg:   uiterm.ColorWhite,
-	}
-	ui.Add(uiViewStatus, &b.UiStatus)
-
-	b.UiInput = uiterm.Textbox{
-		Fg:    uiterm.ColorWhite,
-		Bg:    uiterm.ColorBlack,
-		Input: b.OnTextInput,
-	}
-	ui.Add(uiViewInput, &b.UiInput)
-
-	b.UiInputStatus = uiterm.Label{
-		Fg: uiterm.ColorBlack,
-		Bg: uiterm.ColorWhite,
-	}
-	ui.Add(uiViewInputStatus, &b.UiInputStatus)
-
-	b.UiOutput = uiterm.Textview{
-		Fg: uiterm.ColorWhite,
-		Bg: uiterm.ColorBlack,
-	}
-	ui.Add(uiViewOutput, &b.UiOutput)
-
-	b.UiTree = uiterm.Tree{
-		Generator: b.TreeItem,
-		Listener:  b.TreeItemSelect,
-		Fg:        uiterm.ColorWhite,
-		Bg:        uiterm.ColorBlack,
-	}
-	ui.Add(uiViewTree, &b.UiTree)
-
-	b.Ui.AddKeyListener(b.OnFocusPress, uiterm.KeyTab)
-	b.Ui.AddKeyListener(b.OnVoiceToggle, uiterm.KeyF1)
-	b.Ui.AddKeyListener(b.OnQuitPress, uiterm.KeyF10)
-	b.Ui.AddKeyListener(b.OnClearPress, uiterm.KeyCtrlL)
-	b.Ui.AddKeyListener(b.OnScrollOutputUp, uiterm.KeyPgup)
-	b.Ui.AddKeyListener(b.OnScrollOutputDown, uiterm.KeyPgdn)
-	b.Ui.AddKeyListener(b.OnScrollOutputTop, uiterm.KeyHome)
-	b.Ui.AddKeyListener(b.OnScrollOutputBottom, uiterm.KeyEnd)
+func (b *Barnard) OnUiInitialize() {
 
 	b.start()
 }

@@ -10,7 +10,7 @@ import (
 type KeyListener func(ui *Ui, key Key)
 
 type UiManager interface {
-	OnUiInitialize(ui *Ui)
+	OnUiInitialize()
 	OnUiResize(ui *Ui, width, height int)
 }
 
@@ -89,43 +89,13 @@ func (ui *Ui) SetActive(name string) {
 }
 
 func (ui *Ui) Run() error {
-	if termbox.IsInit {
-		return nil
-	}
-	if err := termbox.Init(); err != nil {
-		return nil
-	}
-	defer termbox.Close()
-	termbox.SetInputMode(termbox.InputAlt)
 
-	events := make(chan termbox.Event)
-	go func() {
-		for {
-			events <- termbox.PollEvent()
-		}
-	}()
-
-	ui.manager.OnUiInitialize(ui)
-	width, height := termbox.Size()
-	ui.manager.OnUiResize(ui, width, height)
-	ui.Refresh()
+	ui.manager.OnUiInitialize()
 
 	for {
 		select {
 		case <-ui.close:
 			return nil
-		case event := <-events:
-			switch event.Type {
-			case termbox.EventResize:
-				ui.manager.OnUiResize(ui, event.Width, event.Height)
-				ui.Refresh()
-			case termbox.EventKey:
-				if event.Ch != 0 {
-					ui.onCharacterEvent(event.Ch)
-				} else {
-					ui.onKeyEvent(Modifier(event.Mod), Key(event.Key))
-				}
-			}
 		}
 	}
 }

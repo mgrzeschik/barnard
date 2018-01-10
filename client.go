@@ -30,21 +30,22 @@ func (b *Barnard) start() {
 		os.Exit(1)
 	} else {
 		b.Stream = stream
+		b.Stream.StartSource()
 	}
 }
 
 func (b *Barnard) OnConnect(e *gumble.ConnectEvent) {
 	b.Client = e.Client
 
-	b.Ui.SetActive(uiViewInput)
-	b.UiTree.Rebuild()
-	b.Ui.Refresh()
+//	b.Ui.SetActive(uiViewInput)
+//	b.UiTree.Rebuild()
+//	b.Ui.Refresh()
 
-	b.UpdateInputStatus(fmt.Sprintf("To: %s", e.Client.Self.Channel.Name))
-	b.AddOutputLine(fmt.Sprintf("Connected to %s", b.Client.Conn.RemoteAddr()))
-	if e.WelcomeMessage != nil {
-		b.AddOutputLine(fmt.Sprintf("Welcome message: %s", esc(*e.WelcomeMessage)))
-	}
+//	b.UpdateInputStatus(fmt.Sprintf("To: %s", e.Client.Self.Channel.Name))
+//	b.AddOutputLine(fmt.Sprintf("Connected to %s", b.Client.Conn.RemoteAddr()))
+//	if e.WelcomeMessage != nil {
+//		b.AddOutputLine(fmt.Sprintf("Welcome message: %s", esc(*e.WelcomeMessage)))
+//	}
 }
 
 func (b *Barnard) OnDisconnect(e *gumble.DisconnectEvent) {
@@ -58,8 +59,8 @@ func (b *Barnard) OnDisconnect(e *gumble.DisconnectEvent) {
 	} else {
 		b.AddOutputLine("Disconnected: " + reason)
 	}
-	b.UiTree.Rebuild()
-	b.Ui.Refresh()
+//	b.UiTree.Rebuild()
+//	b.Ui.Refresh()
 }
 
 func (b *Barnard) OnTextMessage(e *gumble.TextMessageEvent) {
@@ -70,13 +71,13 @@ func (b *Barnard) OnUserChange(e *gumble.UserChangeEvent) {
 	if e.Type.Has(gumble.UserChangeChannel) && e.User == b.Client.Self {
 		b.UpdateInputStatus(fmt.Sprintf("To: %s", e.User.Channel.Name))
 	}
-	b.UiTree.Rebuild()
-	b.Ui.Refresh()
+//	b.UiTree.Rebuild()
+//	b.Ui.Refresh()
 }
 
 func (b *Barnard) OnChannelChange(e *gumble.ChannelChangeEvent) {
-	b.UiTree.Rebuild()
-	b.Ui.Refresh()
+//	b.UiTree.Rebuild()
+//	b.Ui.Refresh()
 }
 
 func (b *Barnard) OnPermissionDenied(e *gumble.PermissionDeniedEvent) {
